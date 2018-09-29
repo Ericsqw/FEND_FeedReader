@@ -26,7 +26,6 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
-
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
@@ -51,7 +50,7 @@ $(function() {
     });
 
 
-  describe('The menu', function() {
+    describe('The menu', function() {
 
 
         /* TODO: Write a test that ensures the menu element is
@@ -69,7 +68,7 @@ $(function() {
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
-          it('menu changes visibility', function() {
+        it('menu changes visibility', function() {
             const body = document.querySelector('body');
             const menu = document.querySelector('.menu-icon-link');
             menu.click();
@@ -77,8 +76,10 @@ $(function() {
             menu.click();
             expect(body.classList.contains('menu-hidden')).toBe(true);
         });
+    });
 
     /* TODO: Write a new test suite named "Initial Entries" */
+    describe('Initial Entries', function() {
 
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -86,13 +87,36 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+         beforeEach(function(done) {
+            loadFeed(0, done);
+         });
 
+         it('completes its work', function() {
+            const feed = document.querySelector('.feed');
+            expect(feed.children.length > 0).toBe(true);
+         });
+    });
     /* TODO: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function() {
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-
+         const feed = document.querySelector('.feed');
+         const firstFeed = [];
+         beforeEach(function(done) {
+            loadFeed(0);
+            Array.from(feed.children).forEach(function(entry) {
+                firstFeed.push(entry.innerText);
+            });
+            loadFeed(1, done);
          });
+
+         it('content changes', function() {
+            Array.from(feed.children).forEach(function(entry,index) {
+                expect(entry.innerText === firstFeed[index]).toBe(false);
+            });
+         });
+    });
 }());
