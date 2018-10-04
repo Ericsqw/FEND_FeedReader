@@ -48,19 +48,17 @@ $(function() {
 
         //check if menu element is hidden
         it('is hidden', function() {
-            const body = document.querySelector('body');
-            expect(body.classList.contains('menu-hidden')).toBe(true);
+            expect($('body').hasClass('menu-hidden')).toBe(true);
         });
 
         /* Check if the menu changes visibility 
         when the nemu icon is clicked */
         it('menu changes visibility', function() {
-            const body = document.querySelector('body');
             const menu = document.querySelector('.menu-icon-link');
             menu.click();
-            expect(body.classList.contains('menu-hidden')).toBe(false);
+            expect($('body').hasClass('menu-hidden')).toBe(false);
             menu.click();
-            expect(body.classList.contains('menu-hidden')).toBe(true);
+            expect($('body').hasClass('menu-hidden')).toBe(true);
         });
     });
 
@@ -72,8 +70,9 @@ $(function() {
 
          /* Check if there is a single .entry element
           within .feed container */
-         it('are loaded', function() {
+         it('are loaded', function(done) {
             expect($('.feed .entry').length).toBeGreaterThan(0);
+            done();
          });
     });
 
@@ -86,8 +85,9 @@ $(function() {
             loadFeed(1, done);
          });
 
-         it('content changes', function() {
+         it('content changes', function(done) {
             expect($('.feed').html()).not.toBe(oldFeed);
+            done();
             });
          });
 }());
