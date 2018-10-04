@@ -77,17 +77,21 @@ $(function() {
     });
 
     describe('New Feed Selection', function() {
-         var oldFeed;
+         let initialFeed,
+             finalFeed;
          beforeEach(function(done) {
             loadFeed(0, function() {
-                oldFeed = $('.feed').html();
+                initialFeed = $('.feed').html();
+                loadFeed(1, function() {
+                    finalFeed = $('.feed').html();
+                    done();
+                });
             });
-            loadFeed(1, done);
          });
 
          it('content changes', function(done) {
-            expect($('.feed').html()).not.toBe(oldFeed);
+            expect(finalFeed).not.toBe(initialFeed);
             done();
             });
-         });
+    });
 }());
